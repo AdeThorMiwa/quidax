@@ -1,0 +1,139 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AuthUserDto {
+  email: String!
+  password: String!
+}
+
+type Avaialable {
+  sold: Float!
+  total: Float!
+}
+
+type Book {
+  avaialability: Avaialable
+  availability_id: String
+  average_ratings: Float!
+  cover_image: String!
+  createdAt: String!
+  genre: [String!]!
+  id: Float!
+  like_count: Float!
+  price: Float!
+  publication_id: String
+  release_date: String!
+  synopsis: String!
+  tags: [String!]!
+  title: String!
+  uid: String!
+  updatedAt: String!
+  writer_id: String!
+}
+
+input BookRatingDto {
+  rating: Float!
+}
+
+input CreateBookDto {
+  availability: Float!
+  cover_image: String!
+  genre: [String!]
+  price: Float!
+  release_date: String
+  synopsis: String!
+  tags: [String!]
+  title: String!
+}
+
+input CreateUserDto {
+  email: String!
+  name: String
+  password: String!
+  password_confirm: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  create_book(body: CreateBookDto!): Book!
+  create_publication(body: PublicationDto!): Publication!
+  delete_book(bookId: String!): Book!
+  delete_publication(publicationId: String!): Publication!
+  delete_user(userId: String!): User!
+  like_book(bookId: String!): Book!
+  login(body: AuthUserDto!): Token!
+  rate_book(body: BookRatingDto!, bookId: String!): Book!
+  register(body: CreateUserDto!): User!
+  update_availability(body: UpdateAvaialabilityDto!, bookId: String!): Book!
+  update_book(body: UpdateBookDto!, bookId: String!): Book!
+  update_publication(body: PublicationDto!, publicationId: String!): Publication!
+  update_user(body: UpdateUserDto!, userId: String!): User!
+}
+
+type Publication {
+  city: String!
+  country: String!
+  createdAt: String!
+  id: Int!
+  name: String
+  state: String!
+  uid: String!
+  updatedAt: String!
+}
+
+input PublicationDto {
+  city: String
+  country: String
+  name: String
+  state: String
+}
+
+type Query {
+  book(bookId: String!): Book!
+  books(query: String!): [Book!]!
+  publication(publicationId: String!): Publication!
+  publications(query: String!): [Publication!]!
+  user(userId: String!): User!
+  users(query: String!): [User!]!
+}
+
+type Token {
+  token: String!
+}
+
+input UpdateAvaialabilityDto {
+  sold: Float!
+  total: Float!
+}
+
+input UpdateBookDto {
+  availability: Float
+  cover_image: String
+  genre: [String!]
+  price: Float
+  release_date: DateTime
+  synopsis: String
+  tags: [String!]
+  title: String
+}
+
+input UpdateUserDto {
+  email: String
+  name: String
+}
+
+type User {
+  createdAt: String!
+  email: String!
+  id: Int!
+  isVerified: Boolean!
+  name: String
+  token: String!
+  uid: String!
+  updatedAt: String!
+}

@@ -1,0 +1,168 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+  previewFeatures = ["referentialActions"]
+}
+
+enum USER_TYPE {
+  DEFAULT
+  WRITER
+  ADMIN
+}
+
+model User {
+  id  Int    @id @default(autoincrement())
+  uid String @unique @default(uuid())
+
+  name           String
+  email          String    @unique
+  isVerified     Boolean   @default(true) // setting this to true for testing sake
+  password       String
+  type           USER_TYPE @default(DEFAULT)
+  publication_id String?
+
+  publication Publication? @relation(fields: [publication_id], references: [uid])
+  books       Book[]
+  carts       Cart[]
+  ratings     Ratings[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("users")
+}
+
+model Publication {
+  id  Int    @id @default(autoincrement())
+  uid String @unique @default(uuid())
+
+  name       String   @unique
+  city       String?
+  state      String?
+  country    String?
+  writer_ids String[]
+
+  writers User[]
+  books   Book[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("publications")
+}
+
+model Book {
+  id  Int    @id @default(autoincrement())
+  uid String @unique @default(uuid())
+
+  cover_image     String
+  title           String
+  availability_id String
+  writer_id       String
+  release_date    DateTime
+  genre           String[]
+  tags            String[]
+  average_ratings Float    @default(0.0)
+  like_count      Int      @default(0)
+  publication_id  String
+  synopsis        String
+  price           Float
+
+  availability Availability @relation(fields: [availability_id], references: [uid])
+  publication  Publication  @relation(fields: [publication_id], references: [uid])
+  writer       User         @relation(fields: [writer_id], references: [uid])
+  book         CartItem[]
+  rating       Ratings[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("books")
+}
+
+model Availability {
+  id  Int    @id @default(autoincrement())
+  uid String @unique @default(uuid())
+
+  total Int @default(0)
+  sold  Int @default(0)
+
+  book Book?
+
+  @@map("availability")
+}
+
+model Ratings {
+  id  Int    @id @default(autoincrement())
+  uid String @unique @default(uuid())
+
+  user_id String
+  book_id String
+  rating  Float  @default(0.0)
+
+  user User @relation(fields: [user_id], references: [uid])
+  book Book @relation(fields: [book_id], references: [uid])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("ratings")
+}
+
+model Genre {
+  id  Int    @id @default(autoincrement())
+  uid String @unique @default(uuid())
+
+  label String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("genres")
+}
+
+model Cart {
+  id  Int    @id @default(autoincrement())
+  uid String @unique @default(uuid())
+
+  user_id     String
+  name        String
+  is_active   Boolean @default(false)
+  items_count Int     @default(0)
+  sub_total   Float   @default(0.0)
+
+  user  User       @relation(fields: [user_id], references: [uid])
+  items CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("carts")
+}
+
+model CartItem {
+  id  Int    @id @default(autoincrement())
+  uid String @unique @default(uuid())
+
+  item_id    String
+  cart_id    String
+  timestamp  DateTime
+  item_count Int      @default(1)
+  sub_total      Float    @default(0.1)
+
+  item Book @relation(fields: [item_id], references: [uid])
+  cart Cart @relation(fields: [cart_id], references: [uid])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("cart_item")
+}

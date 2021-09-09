@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "install:micro-service": "cd micro-service && yarn",
+    "install:api": "cd api && yarn",
+    "install:dev": "concurrently \"yarn install:micro-service\" \"yarn install:api\"",
+    "start:api": "cd api && yarn start:dev",
+    "start:micro-service": "cd micro-service && yarn start:dev",
+    "start:dev": "concurrently \"yarn start:api\" \"yarn start:micro-service\""
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1"
+  }
+}

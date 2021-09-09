@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@*": ["src/*"],
+      "@modules/*": ["src/modules/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"],
+      "@interface/*": ["src/types/interfaces/*"],
+      "@entity/*": ["src/entities/*"],
+      "@enum/*": ["src/types/enums/*"],
+      "@guard/*": ["src/guards/*"],
+      "@constants/*": ["src/constants/*"],
+      "@adapters/*": ["src/adapters/*"],
+      "@app/*": ["src/modules/app/*"],
+      "@auth/*": ["src/modules/auth/*"],
+      "@user/*": ["src/modules/user/*"],
+      "@publication/*": ["src/modules/publication/*"],
+      "@book/*": ["src/modules/book/*"],
+      "@cart/*": ["src/modules/cart/*"]
+      // add more paths heres
+    }
+  }
+}
