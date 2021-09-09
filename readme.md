@@ -4,7 +4,7 @@
 
 A book api built with a micro-service architecture and supports both REST and GraphQl access protocol through an api gateway. This application was built / bootstraped with Nestjs.
 
-**Note: This project is divided into two parts. A micro-service with api implementations, and a Api Gateway on top of it that exposes the endpoints.**
+**Note: This project is divided into two parts. A micro-service with the actual api implementations, and an Api Gateway on top of it that exposes the endpoints both as REST and Graphql.**
 **Note: This project includes a swagger documentation, where with you can see all REST api endpoint provided by the app. Can be accessed on ${host}/api**
 **Note: This project includes a graphql playground, where you can test the graphql endpoint exposed. Can be access on ${host}/gql**
 **Note: This project includes a compodoc documentation, where you can see the full artichetural layout of the app.**
